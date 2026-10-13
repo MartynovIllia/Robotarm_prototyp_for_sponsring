@@ -1,13 +1,12 @@
 #include <Stepper.h>
 
-#include<
-int stepsPerRevolution = 2048;
-int rpm = 10;
+const int stepsPerRevolution = 2048;
+const int rpm = 10;
 
-Stepper myStepper(stepsPerRevolution, 8, 10, 9, 11)
+Stepper myStepper(stepsPerRevolution, 8, 10, 9, 11);
 
-int trigPin = 2;
-int echoPin = 4;
+const int trigPin = 2;
+const int echoPin = 4;
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
@@ -33,6 +32,10 @@ void loop() {
   Serial.print("Avstånd: ");
   Serial.print(distance);
   Serial.println(" cm");
+
+  /*if(distance <= 5){
+
+  }*/
 
 
   delay(500);
