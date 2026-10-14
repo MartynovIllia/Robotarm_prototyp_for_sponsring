@@ -2,6 +2,10 @@
 
 const int stepsPerRevolution = 2048;
 const int rpm = 10;
+int currentPos = 1024;
+int topPos= 1024;
+int midPos = 512;
+int bottomPos = 0;
 
 Stepper myStepper(stepsPerRevolution, 8, 10, 9, 11);
 
@@ -9,7 +13,7 @@ const int trigPin = 2;
 const int echoPin = 4;
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(9600);
+  Serial.begin(115200);
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
   myStepper.setSpeed(10); // Sätt hastighet i RPM (max ca 15 för denna motor)
@@ -33,9 +37,23 @@ void loop() {
   Serial.print(distance);
   Serial.println(" cm");
 
-  /*if(distance <= 5){
+  int targetPos = currentPos;
 
-  }*/
+  if (distance > 0 && distance < 5){
+    targetPos = bottomPos;
+  }
+  else if (distance >= 10 && distance <= 20){
+    targetPos = midPos;
+  }
+  else if (distance > 20){
+    targetPos = topPos;
+  }
+
+  int stepsToMove = targetPos - currentPos;
+  if (stepsToMove != 0){
+    myStepper.step(stepsToMove);
+    currentPos = targetPos;
+  }
 
 
   delay(500);
